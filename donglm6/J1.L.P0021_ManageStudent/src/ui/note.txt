@@ -1,0 +1,26 @@
+1.	I. Kiểm tra Nhập Liệu Thuộc Tính (Validator/Inputer)
+•	ID Hợp lệ: Nhập ID bắt đầu bằng S/s theo sau là số (ví dụ: S123) => Hợp lệ.
+•	ID Ngoại lệ: Nhập ID thiếu S/s hoặc chứa ký tự khác số (ví dụ: 1234, S12A) => Bắt nhập lại.
+•	Tên Hợp lệ: Nhập tên chỉ chứa chữ cái và khoảng trắng => Hợp lệ.
+•	Tên Ngoại lệ: Nhập tên chứa số hoặc ký tự đặc biệt (ví dụ: Nguyễn 123) => Bắt nhập lại.
+•	Học kỳ/Khóa học Ngoại lệ: Nhập chuỗi rỗng hoặc giá trị không hợp lệ => Bắt nhập lại.
+2.	II. Chức năng createStudent() (Tạo Sinh viên)
+•	Thêm mới Hợp lệ: Nhập ID mới => Yêu cầu nhập Tên =>Thêm thành công.
+•	Tên tự động: Nhập ID đã tồn tại (khác Học kỳ/Khóa học) =>Tự động điền Tên cũ.
+•	Ngoại lệ - Trùng lặp: Nhập bản ghi (ID, Học kỳ, Khóa học) đã tồn tại => Ném Exception: "This record is existed!".
+•	Kiểm soát tiếp tục: $|List| > 10$ và chọn 'Y'/'y' => Tiếp tục vòng lặp.
+•	Kiểm soát dừng: $|List| > 10$ và chọn 'N'/'n' => Vòng lặp kết thúc.
+3.	III. Chức năng findAndSort() (Tìm kiếm và Sắp xếp)
+•	Tìm kiếm Thành công: Nhập tên có trong danh sách => Trả về list, sắp xếp theo tên và in ra.
+•	Tìm kiếm Thất bại: Nhập tên không tồn tại => Ném Exception: "Can not found name!".
+4.	IV. Chức năng updateOrDelete() (Cập nhật hoặc Xóa)
+•	Tìm ID Thất bại: Nhập ID không tồn tại => Ném Exception: "Can not found id".
+•	Tìm ID Thành công: Nhập ID tồn tại => Hiển thị bản ghi, yêu cầu chọn Record.
+•	Logic Xóa: Chọn Record, chọn 'D'/'d' => Bản ghi được xóa.
+•	Logic Cập nhật Hợp lệ: Chọn 'U'/'u', nhập thông tin mới không trùng lặp => Cập nhật thành công.
+•	Cập nhật Trùng lặp: Cập nhật thông tin bị trùng với Record khác => Ném Exception: "New record be duplicate!!".
+•	Tên tự động (Update): Chọn 'U', nhập ID đã có => Tên được tự động điền.
+5.	V. Chức năng report() và Logic Cốt lõi
+•	Report Thành công: Danh sách có dữ liệu => Tạo và in báo cáo thống kê.
+•	Report Thất bại: Danh sách rỗng => Ném Exception: "List is empty!".
+•	Delete/Update List rỗng: Gọi delete() hoặc update() khi danh sách rỗng => Ném Exception: "List is empty...".

@@ -1,0 +1,432 @@
+I. Muc tieu chuong trinh
+
+Xay dung chuong trinh Worker Management de quan ly thong tin cong nhan va lich su thay doi luong.
+Chuong trinh cho phep nguoi dung thuc hien cac chuc nang:
+
+Them cong nhan moi vao he thong.
+Tang luong cho cong nhan.
+Giam luong cho cong nhan.
+Luu lai lich su thay doi luong.
+Hien thi thong tin lich su thay doi luong.
+
+* Thong tin cua Worker can quan ly
+Dieu kien du lieu:
+ID phai bat dau bang ky tu W va theo sau la chu so.
+Name chi chua chu cai va khoang trang.
+Age nam trong khoang tu 18 den 50.
+Salary phai lon hon 0.
+Work Location chi chua chu cai, so va khoang trang.
+* Cac chuc nang yeu cau
+Function 1: Add Worker
+Cho phep them mot cong nhan moi.
+Yeu cau:
+Nhap day du thong tin Worker.
+Kiem tra du lieu dau vao.
+Khong cho phep Worker co ID bi trung.
+Neu them thanh cong, Worker duoc luu vao danh sach quan ly.
+
+Function 2: Up Salary
+Cho phep tang luong cho Worker.
+Yeu cau:
+Worker phai ton tai trong he thong.
+Amount phai lon hon 0.
+Sau khi tang luong:
+Cap nhat salary moi.
+Tao mot ban ghi SalaryHistory.
+
+Function 3: Down Salary
+Cho phep giam luong cho Worker.
+Yeu cau:
+Worker phai ton tai.
+Amount phai lon hon 0.
+Salary sau khi giam khong duoc nho hon 0.
+Luu lai lich su giam luong.
+
+Function 4: Display Information Salary
+Hien thi lich su thay doi luong.
+Yeu cau:
+Hien thi thong tin:
+Code
+Name
+Age
+Salary
+Status
+Date
+Sap xep lich su theo ID Worker.
+
+Function 5: Exit
+Thoat chuong trinh.
+
+II. Giai thich tong quat chuong trinh
+
+1. Y tuong chuong trinh
+
+Chuong trinh quan ly Worker bang cach su dung cac lop:
+
+Worker: luu thong tin cong nhan.
+SalaryHistory: luu lich su thay doi luong.
+ManagerWorker: quan ly danh sach Worker.
+ManagerSalaryHistory: quan ly danh sach lich su.
+Controller: xu ly yeu cau tu nguoi dung.
+Main: hien thi menu va chay chuong trinh
+
+III. Kiem tra hop le du lieu dau vao
+
+1. Worker ID (Dung Regex [Ww]\d+):
+Hop le: Nhap chuoi bat dau bang chu 'W' hoac 'w' theo sau la cac chu so (Vi du: W1, w100). Chuong trinh se tu dong chuyen thanh chu hoa (W1).
+Ngoai le: Nhap sai dinh dang (Vi du: ABC, 123, W_1) → He thong bao "Invalid!" va bat nhap lai.
+Test case:
+
+* Input: W1
+Expected: Hop le, tao Worker voi ID W1.
+* Input: w100
+Expected: Hop le, tu dong chuyen thanh W100.
+* Input: ABC, 123, W_1, W@
+Expected: Bao "Invalid!" va yeu cau nhap lai.
+* Input: W0
+Expected: Hop le vi Regex chi kiem tra W + chu so.
+
+2. Name (Dung Regex [A-Za-z\s]+):
+Hop le: Nhap chuoi chi chua chu cai va khoang trang (Vi du: Nguyen Van A).
+Ngoai le: Nhap chuoi chua so hoac ky tu dac biet (Vi du: An123, Binh@) → He thong bao "Invalid!" va bat nhap lai.
+Test case:
+
+* Input: Nguyen Van A
+Expected: Hop le.
+* Input: John Smith
+Expected: Hop le.
+* Input: An123, Binh@, John1
+Expected: Bao "Invalid!" va nhap lai.
+* Input: 12345
+Expected: Khong hop le.
+
+3. Age (Dung Range [18, 50]):
+Hop le: Nhap so nguyen trong pham vi tu 18 den 50.
+Ngoai le: Nhap so < 18 hoac > 50 hoac khong phai so → He thong bao "age >= 18 and <=50 !" va bat nhap lai.
+Test case:
+
+* Input: 18
+Expected: Hop le.
+* Input: 50
+Expected: Hop le.
+* Input: 17, 51
+Expected: Khong hop le.
+* Input: abc
+Expected: Bao loi nhap so.
+
+4. Salary / Amount (Dung Range Double.MIN_VALUE -> MAX_VALUE va kiem tra logic > 0):
+Hop le: Nhap so thuc lon hon 0.
+Ngoai le: Nhap so <= 0 hoac khong phai so → He thong nem Exception/Bao loi: "salary must be > 0" va bat nhap lai.
+Test case:
+
+* Input: 1000
+Expected: Hop le.
+* Input: 0.5
+Expected: Hop le.
+* Input: 0, -100, abc
+Expected: Bao "salary must be > 0".
+Boundary test:
+* Input: 0
+Expected: Fail.
+* Input: Double.MIN_VALUE
+Expected: Pass.
+
+5. Work Location (Dung Regex [A-Za-z0-9\s]+):
+Hop le: Nhap chuoi chua chu cai, so va khoang trang (Vi du: Hanoi Shop 1).
+Ngoi le: Nhap ky tu dac biet (Vi du: Hanoi#1) → He thong bao "Invalid!" va bat nhap lai.
+Test case:
+
+* Input: Hanoi
+Expected: Hop le.
+* Input: Hanoi Shop 1
+Expected: Hop le.
+* Input: Hanoi#1, Factory@
+Expected: Bao "Invalid!".
+
+Cac gia tri bien can kiem tra:
+Age:
+
+* 17 -> Fail
+* 18 -> Pass
+* 50 -> Pass
+* 51 -> Fail
+Salary:
+* -1 -> Fail
+* 0 -> Fail
+* > 0 -> Pass
+> Amount:
+
+
+* -1 -> Fail
+* 0 -> Fail
+* > 0 -> Pass
+
+
+
+IV. Chuc nang Add Worker (Option 1)
+Test Case 1: Add Worker thanh cong
+Input:
+W01 | John | 25 | 1000 | Hanoi
+Expected:
+Add success
+Worker:
+W01 | John | 25 | 1000 | Hanoi
+
+Test Case 2: ID chu thuong
+Input:
+w02 | David | 30 | 2000 | HCM
+Expected:
+W02 | David | 30 | 2000 | HCM
+(ID duoc chuyen thanh chu hoa)
+
+Test Case 3: Trung ID
+Danh sach hien co:
+W01 | John | 25 | 1000 | Hanoi
+Input:
+W01
+Expected:
+Worker with ID W01 already exists. Please input again
+
+Test Case 4: Age khong hop le
+Input:
+W03 | Tom | 17 | 1500 | Da Nang
+Expected:
+age >= 18 and <=50 !
+
+Test Case 5: Salary khong hop le
+Input:
+W04 | Alex | 25 | 0 | Hanoi
+Expected:
+salary must be > 0
+
+V. Chuc nang Up Salary (Option 2)
+Test Case 1: Tang luong thanh cong
+Worker hien tai:
+W01 | John | 25 | 1000 | Hanoi
+Input:
+Code = W01
+Amount = 500
+Expected:
+Salary moi:
+W01 | John | 25 | 1500 | Hanoi
+History:
+W01 | John | 25 | 1500 | UP
+
+Test Case 2: Danh sach rong
+Input:
+Option 2
+Expected:
+List is empty!
+
+Test Case 3: ID khong ton tai
+Input:
+Code = W99
+Expected:
+Can not found code!
+
+Test Case 4: Amount = 0
+Input:
+Amount = 0
+Expected:
+salary must be > 0
+
+Test Case 5: Amount am
+Input:
+Amount = -100
+Expected:
+salary must be > 0
+
+VI. Chuc nang Down Salary (Option 3)
+Test Case 1: Giam luong thanh cong
+Worker hien tai:
+W01 | John | 25 | 5000 | Hanoi
+Input:
+Amount = 2000
+Expected:
+W01 | John | 25 | 3000 | Hanoi
+History:
+W01 | John | 25 | 3000 | DOWN
+
+Test Case 2: Giam bang luong hien tai
+Worker hien tai:
+W01 | John | 25 | 1000 | Hanoi
+Input:
+Amount = 1000
+Expected:
+W01 | John | 25 | 0 | Hanoi
+History:
+W01 | John | 25 | 0 | DOWN
+
+Test Case 3: Amount lon hon luong hien tai
+Worker hien tai:
+W01 | John | 25 | 1000 | Hanoi
+Input:
+Amount = 1500
+Expected:
+Amount must be smaller than current salary (1000.0)!
+Yeu cau nhap lai.
+
+Test Case 4: ID khong ton tai
+Input:
+Code = W99
+Expected:
+Can not found code!
+
+Test Case 5: Danh sach rong
+Expected:
+List is empty!
+
+VII. Chuc nang Display Information Salary (Option 4)
+//test du lieu bao gom 3 nguoi.
+// up/down 7-9 lan
+
+Test Case 1: Hien thi lich su
+History:
+W03 | James | 40 | 2200 | DOWN
+W02 | David | 30 | 2500 | DOWN
+W01 | John | 25 | 1500 | UP
+Expected:
+Code Name Age Salary Status Date
+W01 John 25 1500 UP
+W02 David 30 2500 DOWN
+W03 James 40 2200 DOWN
+
+Test Case 2: Kiem tra sap xep theo ID
+History:
+W03 | James | 40 | 2200 | DOWN
+W01 | John | 25 | 1500 | UP
+W02 | David | 30 | 2500 | DOWN
+
+Expected:
+W01 | John | 25 | 1500 | UP
+W02 | David | 30 | 2500 | DOWN
+W03 | James | 40 | 2200 | DOWN
+
+Test Case 3: History rong
+Expected:
+History Salary is empty
+Test Case 4: Trung lich su
+Input:
+Them lai record da ton tai.
+
+Expected:
+This record history is existed!!!
+
+Test workflow:
+
+Vong 0: tao 3 worker
+Worker 1: w1, An Nguyen, 18, 2000.0, Hanoi
+--------- Add Worker ----------
+Enter id: w1
+Enter Name: An Nguyen
+Enter age: 18
+Enter Salary:
+2000
+Enter work location: Hanoi
+
+Worker 2: W2, Binh Le, 50, 3000.0, Danang
+--------- Add Worker ----------
+Enter id: w2
+Enter Name: Binh Le
+Enter age: 50
+Enter Salary:
+3000
+Enter work location: Danang
+Add success: Worker{W2, Binh Le, 50, 3000.0, Danang}
+
+Worker 3: W3, Cuong Vo, 24, 5000.0, HCM
+--------- Add Worker ----------
+Enter id: w3
+Enter Name: Cuong Vo
+Enter age: 24
+Enter Salary: 5000
+Enter work location: HCM
+Add success: Worker{W3, Cuong Vo, 24, 5000.0, HCM}
+
+Vong 1: tang luong w1, giam luong w2, tang luong w3 (so luong 1000)
+
+Worker 1: w1, An Nguyen, 18, 2000.0, Hanoi
+------- Up Salary --------
+Enter id: w1
+Enter Salary: 1000
+Up salary success:
+Worker{W1, An Nguyen, 18, 3000.0, Hanoi}
+
+Worker 2: W2, Binh Le, 50, 3000.0, Danang
+------- Down Salary --------
+Enter id: w2
+Enter Salary: 1000
+Down salary success:
+Worker{W2, Binh Le, 50, 2000.0, Danang}
+
+Worker 3: W3, Cuong Vo, 24, 5000.0, HCM
+------- Up/Down Salary --------
+Enter id: w3
+Enter Salary: 1000
+Up salary success:
+Worker{W3, Cuong Vo, 24, 6000.0, HCM}
+
+Vong 2: giam luong w1, tang luong w2, giam luong w3 (so luong 700)
+
+Worker 1: W3, Cuong Vo, 24, 6000.0, HCM
+------- Up/Down Salary --------
+Enter id: w3
+Enter Salary: 700
+Down salary success:
+Worker{W3, Cuong Vo, 24, 5300.0, HCM}
+
+Worker 2: w1, An Nguyen, 18, 3000.0, Hanoi
+------- Up Salary --------
+Enter id: w1
+Enter Salary:
+700
+Down salary success:
+Worker{W1, An Nguyen, 18, 2300.0, Hanoi}
+
+Worker 3: W2, Binh Le, 50, 2000.0, Danang
+------- Up/Down Salary --------
+Enter id: w2
+Enter Salary: 700
+Up salary success:
+Worker{W2, Binh Le, 50, 2700.0, Danang}
+
+
+Vong 3: tang luong w1, giam luong w2, tang luong w3 (so luong 600
+
+Worker 1: w1, An Nguyen, 18, 2300.0, Hanoi
+------- Up/Down Salary --------
+Enter id: w1
+Enter Salary: 600
+Up salary success:
+Worker{W1, An Nguyen, 18, 2900.0, Hanoi}
+
+Worker 2: W2, Binh Le, 50, 2700.0, Danang
+------- Up/Down Salary --------
+Enter id: w2
+Enter Salary: 600
+Down salary success:
+Worker{W2, Binh Le, 50, 2100.0, Danang}
+
+Worker 3: W3, Cuong Vo, 24, 5300.0, HCM
+------- Up/Down Salary --------
+Enter id: w3
+Enter Salary: 600
+Up salary success:
+Worker{W3, Cuong Vo, 24, 5900.0, HCM}
+
+Vong 4: hien thi report bien dong luong worker (da sap xep theo id worker)
+   Code      Name       Age    Salary    Status           Date
+     W1 An Nguyen        18      3000        UP     18/07/2026
+     W1 An Nguyen        18      1000      DOWN     18/07/2026
+     W1 An Nguyen        18      1600        UP     18/07/2026
+     W2   Binh Le        50      2000      DOWN     18/07/2026
+     W2   Binh Le        50      1300      DOWN     18/07/2026
+     W2   Binh Le        50       700      DOWN     18/07/2026
+     W3  Cuong Vo        18      6000        UP     18/07/2026
+     W3  Cuong Vo        18      6600        UP     18/07/2026
+
+
+
+
+
+

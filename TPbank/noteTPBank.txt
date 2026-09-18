@@ -1,0 +1,124 @@
+Chuong trinh yeu cau to chuc ma nguon thanh 2 Class chinh:  
+
+1. Class Main (Giao dien & Dieu huong luong) 
+    Nhiem vu hien thi giao dien, nhan du lieu dau vao tu nguoi dung va dieu huong luong chay (goi cac ham xu ly tu class Ebank).  
+    Menu & Ngon ngu: Thiet ke mot giao dien co khai bao bien choice, yeu cau nguoi dung lua chon 
+        1 (Vietnamese) hoac 
+        2 (English) de goi ham doi ngon ngu toan he thong, hoac nhap 3 de thoat. 
+    Su dung ResourceBundle de nap du lieu tu file .properties.  
+    Luong nhap lieu & Kiem soat loi: Sau khi ngon ngu duoc thiet lap, truc tiep khai bao va quan ly cac bien 
+        accountNumber (So tai khoan), 
+        password (Mat khau), generatedCaptcha (Ma he thong sinh), 
+        va inputCaptcha (Ma nguoi dung nhap) de tuan tu lay du lieu tu ban phim.  
+
+
+Bo sung chuc nang luong chay: Neu nhap sai o bat ky buoc nao, he thong phai in ra man hinh loi bang dung ngon ngu da chon, va bat buoc nguoi dung nhap lai ngay tai buoc do cho den khi hop le roi moi cho di tiep sang buoc tiep theo.  
+
+2. Class Ebank (Logic Xac thuc & Xu ly Du lieu) 
+
+Chua toan bo logic kiem tra he thong. Bat buoc phai tu viet (implement) 5 ham sau:  
+
+Ham 1: Chuyen doi ngon ngu toan he thong   
+
+    Ten ham: void setLocate(Locale locate) (Luu y: De bai ghi nham thanh Locate locate, nhung bat buoc phai dung doi tuong Locale chuan cua Java).  
+    Yeu cau xu ly: Nhan tham so truyen vao tu su kien chon Menu o Main de xac dinh va nap file tu dien ngon ngu tuong ung (En.properties hoac Vi.properties).  
+
+Ham 2: Xac thuc So tai khoan   
+    Ten ham: String checkAccountNumber(String accountNumber).  
+    Yeu cau xu ly: Xac thuc so tai khoan phai la chuoi so nguyen co do dai chinh xac 10 chu so. Xu ly bang Regex de doi chieu xem co khop dung 10 so khong.  
+    Ket qua tra ve: Tra ve chuoi rong "" neu hop le. Tra ve chuoi thong bao loi theo dung ngon ngu da chon neu sai dinh dang.  
+
+Ham 3: Xac thuc Mat khau   
+    Ten ham: String checkPassword(String password).  
+    Yeu cau xu ly: Xac thuc mat khau co do dai tu 8 den 31 ky tu. Dung Regex de ep bat buoc phai chua dong thoi ca chu va so.  
+    Ket qua tra ve: Tra ve chuoi rong "" neu hop le. Tra ve cau thong bao loi da ngon ngu neu mat khau sai quy tac.  
+Ham 4 & 5: Xu ly va Kiem tra Captcha   
+    Ham tao ma: String generateCaptcha(). Dung ham Random de boc ngau nhien ky tu va so ghep thanh mot chuoi in ra thanh ma Captcha (thuong la 5-6 ky tu). Tra ve chuoi random do.  
+    Ham kiem tra: String checkCaptcha(String captchaInput, String captchaGenerate).  
+    Yeu cau xu ly: Dung ham String.contains() de kiem tra xem ky tu nguoi dung nhap vao co thuc su nam trong chuoi random da sinh ra truoc do khong.  
+    Ket qua tra ve: Tra ve chuoi rong "" neu hop le. Tra ve cau thong bao loi da ngon ngu neu khong khop.  
+
+Test Case
+2. Kiem tra Hop le Dau vao
+
+Account Number: Yeu cau la so va co dung 10 chu so (Hop le).
+La chu cai hoac ky tu dac biet (Vi du: a) -> Hien thi loi, bat nhap lai.
+It hoac nhieu hon 10 chu so (Vi du: 123456789) -> Hien thi loi, bat nhap lai.
+La so thap phan hoac chuoi khong phai so -> Hien thi loi, bat nhap lai.
+Bo trong -> Hien thi loi, bat nhap lai.
+
+Password: Yeu cau phai chua ca ky tu va so, do dai hop le tu 8 den 31 ky tu (Hop le).
+Chi chua so (Vi du: 12345678) -> Hien thi loi, bat nhap lai.
+Chi chua chu cai (Vi du: aaaaaaaa) -> Hien thi loi, bat nhap lai.
+Do dai ngoai pham vi 8 den 31 ky tu (qua ngan hoac qua dai) -> Hien thi loi, bat nhap lai.
+Bo trong -> Hien thi loi, bat nhap lai.
+
+Captcha: Yeu cau cac ky tu nhap phai ton tai trong chuoi Captcha ngau nhien da tao (Hop le).
+Bo trong -> Hien thi loi, bat nhap lai.
+Ky tu nhap vao khong ton tai trong chuoi Captcha da tao (Vi du: nhap AX khi Captcha la H9MOA) -> Hien thi loi, bat nhap lai.
+
+Test:
+1. Vietnamese
+2. English
+3. Exit
+// test tieng viet:
+Please choice one option: 
+//rong: nhap lai
+Please choice one option: 1
+//test rong
+So tai khoan: 
+So tai khoan phai la 1 so va phai co 10 chu so
+// la ky tu
+So tai khoan: asd
+So tai khoan phai la 1 so va phai co 10 chu so
+//So nhung khong du 10 ky tu
+So tai khoan: 1234567
+So tai khoan phai la 1 so va phai co 10 chu so
+//test dung
+So tai khoan: 1234567890
+
+//check rong
+Mat khau: 
+Mat khau phai trong khoang 8-31 ky tu va phai chua ky tu va so
+// thieu ky tu so
+Mat khau: asdf
+Mat khau phai trong khoang 8-31 ky tu va phai chua ky tu va so
+//thieu ky tu chu
+Mat khau: 2345678
+Mat khau phai trong khoang 8-31 ky tu va phai chua ky tu va so
+//test dung:
+Mat khau: asdfg1234567
+Captcha: WgIsN
+//sai ma capcha
+Nhap 1 ky tu captcha: qwer
+Captcha sai
+Captcha: G5WCE
+//nhap dung
+Nhap 1 ky tu captcha: G5WCE
+Dang nhap thanh cong!
+
+//test tieng anh: tuong tu tieng viet nhung doi ngon ngu
+1. Vietnamese
+2. English
+3. Exit
+Please choice one option: 2
+Account number: 
+Account number must is a number and must have 10 digits
+Account number: asd
+Account number must is a number and must have 10 digits
+Account number: 1234567
+Account number must is a number and must have 10 digits
+Account number: 1234567890
+Password: 
+Password must be between 8 and 31 characters and must be alphanumeric
+Password: asdf
+Password must be between 8 and 31 characters and must be alphanumeric
+Password: 1234567
+Password must be between 8 and 31 characters and must be alphanumeric
+Password: qwert123456
+Captcha: djrgl
+Enter a Captcha characters: qwert
+Captcha incorrect
+Captcha: cxxYF
+Enter a Captcha characters: cxxYF
+Login successful!
