@@ -1,0 +1,26 @@
+yêu cầu người dùng nhập vào 1 số: số phần tử của mảng (n)
+ - input: nhập số phần tử mảng (n) với n là số nguyên dương (n > 0)
+ -> sau đó hệ thống tự sinh ra 1 mảng gồm n phần tử, các phần tử là số nguyên ngẫu nhiên từ 0 đến n
+ - in ra mảng trước khi sắp xếp (unsorted array)
+ - chạy bubble sort rồi in ra mảng sau khi sắp xếp (sorted array)
+
+- hàm sắp xếp nổi bọt (bubble sort):
+ so sánh từng cặp phần tử liền kề, nếu phần tử trước lớn hơn phần tử sau thì hoán đổi (swap).
+ lặp lại cho đến khi không còn lần swap nào xảy ra -> mảng đã sắp xếp xong.
+ return: void (sắp xếp trực tiếp trên mảng gốc) hoặc trả về mảng đã sắp xếp tăng dần.
+
+2. test case
+ - case input:
+  + nhập số nguyên âm (số nhỏ hơn 0, vd: -3) -> bắt nhập lại
+  + nhập số 0 -> bắt nhập lại
+  + nhập ký tự không phải số (vd: abc, @, khoảng trắng) -> bắt nhập lại
+  + nhập số thập phân (số có phần lẻ sau dấu chấm, vd: 3.5) -> bắt nhập lại
+  + nhập số nguyên dương hợp lệ (vd: 5) -> sinh mảng và tiếp tục
+
+ - case bubble sort:
+  + mảng chỉ có 1 phần tử (n=1) -> unsorted và sorted in ra giống nhau (vd: [7] -> [7])
+  + mảng có nhiều phần tử bất kỳ -> sort tăng dần từ nhỏ đến lớn (vd: [15,3,42,8] -> [3,8,15,42])
+  + mảng đã sắp xếp tăng dần sẵn -> giữ nguyên, không có lần swap nào (vd: [1,2,3,4,5] -> [1,2,3,4,5])
+  + mảng sắp xếp ngược hoàn toàn (lớn đến nhỏ) -> đảo hoàn toàn thành tăng dần (vd: [5,4,3,2,1] -> [1,2,3,4,5])
+  + mảng có các phần tử bằng nhau -> giữ nguyên, không swap (vd: [3,3,3] -> [3,3,3])
+

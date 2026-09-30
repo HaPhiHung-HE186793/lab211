@@ -1,0 +1,29 @@
+yêu cầu người dùng nhập vào 1 số: số phần tử của mảng (n)
+ - input: nhập số phần tử mảng (n) với n là số nguyên dương (n > 0)
+ -> sau đó hệ thống tự sinh ra 1 mảng gồm n phần tử, các phần tử là số nguyên ngẫu nhiên từ 0 đến n
+ - in ra mảng trước khi sắp xếp (unsorted array)
+ - chạy selection sort rồi in ra mảng sau khi sắp xếp (sorted array)
+
+- hàm sắp xếp chọn (selection sort):
+ mảng được chia thành 2 phần: phần đã sắp xếp (sorted) và phần chưa sắp xếp (unsorted).
+ ban đầu phần sorted rỗng, phần unsorted là toàn bộ mảng.
+ mỗi lượt: tìm phần tử nhỏ nhất trong phần unsorted, swap nó với phần tử đầu tiên của phần unsorted,
+ sau đó phần tử đó được tính vào phần sorted.
+ lặp lại cho đến khi phần unsorted rỗng -> mảng đã sắp xếp xong.
+ return: void (sắp xếp trực tiếp trên mảng gốc), mảng được sắp xếp tăng dần.
+
+2. test case
+ - case input:
+  + nhập số nguyên âm (số nhỏ hơn 0, vd: -3) -> bắt nhập lại
+  + nhập số 0 -> bắt nhập lại
+  + nhập ký tự không phải số (vd: abc, @, khoảng trắng) -> bắt nhập lại
+  + nhập số thập phân (số có phần lẻ sau dấu chấm, vd: 3.5) -> bắt nhập lại
+  + nhập số nguyên dương hợp lệ (vd: 5) -> sinh mảng và tiếp tục
+
+ - case selection sort:
+  + mảng chỉ có 1 phần tử (n=1) -> unsorted và sorted in ra giống nhau (vd: [7] -> [7])
+  + mảng có nhiều phần tử bất kỳ -> tìm min từng lượt, sort tăng dần (vd: [5,1,12,-5,16] -> [-5,1,5,12,16])
+  + mảng đã sắp xếp tăng dần sẵn -> min mỗi lượt đúng vị trí rồi, không cần swap (vd: [1,2,3,4,5] -> [1,2,3,4,5])
+  + mảng sắp xếp ngược hoàn toàn (lớn đến nhỏ) -> mỗi lượt đều phải swap, kết quả đảo hoàn toàn (vd: [5,4,3,2,1] -> [1,2,3,4,5])
+  + mảng có các phần tử bằng nhau -> min = chính nó, không swap, giữ nguyên (vd: [3,3,3] -> [3,3,3])
+  + mảng có phần tử trùng nhau (không phải toàn bằng) -> sort đúng nhưng thứ tự 2 phần tử bằng nhau có thể đổi chỗ (not stable, vd: [2,12,2] có thể -> [2,2,12])
