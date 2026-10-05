@@ -27,3 +27,111 @@ yêu cầu người dùng nhập vào 1 số: số phần tử của mảng (n)
   + mảng sắp xếp ngược hoàn toàn (lớn đến nhỏ) -> mỗi lượt đều phải swap, kết quả đảo hoàn toàn (vd: [5,4,3,2,1] -> [1,2,3,4,5])
   + mảng có các phần tử bằng nhau -> min = chính nó, không swap, giữ nguyên (vd: [3,3,3] -> [3,3,3])
   + mảng có phần tử trùng nhau (không phải toàn bằng) -> sort đúng nhưng thứ tự 2 phần tử bằng nhau có thể đổi chỗ (not stable, vd: [2,12,2] có thể -> [2,2,12])
+
+
+-----------------------------
+
+
+Dưới đây là bản dịch tiếng Việt của yêu cầu đề bài:
+
+**Tiêu đề**
+Thuật toán sắp xếp chọn (Selection sort algorithm).
+
+**Bối cảnh**
+Sắp xếp chọn là một trong những thuật toán sắp xếp có độ phức tạp thời gian là O(n²), điều này khiến nó khá kém hiệu quả khi dùng để sắp xếp các tập dữ liệu có dung lượng lớn. Tuy nhiên, thuật toán này lại nổi bật vì tính đơn giản trong lập trình và nó có thể hoạt động hiệu quả hơn các thuật toán sắp xếp khác trong một số tình huống nhất định (xem phần phân tích độ phức tạp để biết thêm chi tiết).
+
+**Đặc tả chương trình**
+Thiết kế một chương trình cho phép người dùng nhập vào số lượng phần tử của mảng. Tạo các số nguyên ngẫu nhiên tương ứng với số lượng đã nhập. Hiển thị mảng chưa sắp xếp và mảng đã được sắp xếp bằng thuật toán sắp xếp chọn.
+
+**Chi tiết các chức năng:**
+
+1. Hiển thị màn hình yêu cầu người dùng nhập vào một số dương (hệ thập phân).
+* Khi người dùng chạy chương trình, hiển thị màn hình yêu cầu nhập một số dương.
+* Người dùng nhập vào một số dương. Sau đó, chương trình thực hiện Chức năng 2.
+
+
+2. Hiển thị & sắp xếp mảng.
+* Tạo số nguyên ngẫu nhiên trong một khoảng giá trị cho mỗi phần tử của mảng.
+* Hiển thị mảng trước và sau khi được sắp xếp.
+
+
+
+**Giao diện người dùng dự kiến:**
+(Bạn có thể tham khảo quá trình hoạt động của giao diện/thuật toán thông qua hình ảnh minh họa trong tệp `image_5de702.jpg`).
+
+**Hướng dẫn**
+
+**Thuật toán**
+Ý tưởng của thuật toán khá đơn giản. Mảng được tưởng tượng chia thành hai phần: phần đã sắp xếp và phần chưa sắp xếp. Ban đầu, phần đã sắp xếp trống, trong khi phần chưa sắp xếp chứa toàn bộ mảng. Tại mỗi bước, thuật toán sẽ tìm phần tử nhỏ nhất trong phần chưa sắp xếp và thêm nó vào cuối phần đã sắp xếp. Khi phần chưa sắp xếp không còn phần tử nào, thuật toán sẽ dừng lại.
+
+Khi thuật toán sắp xếp một mảng, nó sẽ hoán đổi (swap) phần tử đầu tiên của phần chưa sắp xếp với phần tử nhỏ nhất tìm được, sau đó phần tử này sẽ được tính là đã nằm trong phần đã sắp xếp. Cách cài đặt thuật toán sắp xếp chọn bằng mảng này có tính chất "không ổn định" (not stable). Trong trường hợp cấu trúc dữ liệu là danh sách liên kết (linked list), thay vì hoán đổi, ta có thể thay đổi các liên kết nối phần tử nhỏ nhất vào phần đã sắp xếp, khi đó thuật toán sắp xếp chọn mới có tính "ổn định".
+
+Hãy xem một ví dụ về việc sắp xếp một mảng để hiểu rõ hơn về ý tưởng của thuật toán sắp xếp chọn.
+**Ví dụ:** Sắp xếp mảng `{5, 1, 12, -5, 16, 2, 12, 14}` sử dụng thuật toán sắp xếp chọn (chi tiết từng bước xem trong tệp `image_5de702.jpg`).
+
+
+-----------------------------------------
+
+Dưới đây là bản dịch tiếng Việt của yêu cầu đề bài:
+
+**Tiêu đề**
+Thuật toán sắp xếp nổi bọt (Bubble sort algorithm).
+
+**Bối cảnh**
+Sắp xếp nổi bọt là một thuật toán sắp xếp đơn giản và rất nổi tiếng. Trong thực tế, nó rất hiếm khi được sử dụng và ứng dụng chính của nó thường là để làm bài học nhập môn về các thuật toán sắp xếp. Sắp xếp nổi bọt thuộc nhóm các thuật toán sắp xếp có độ phức tạp thời gian là O(n²), điều này khiến nó khá kém hiệu quả khi dùng để sắp xếp các tập dữ liệu có dung lượng lớn. Thuật toán sắp xếp nổi bọt có tính "ổn định" (stable) và "thích ứng" (adaptive).
+
+**Đặc tả chương trình**
+Thiết kế một chương trình cho phép người dùng nhập vào số lượng phần tử của mảng. Tạo các số nguyên ngẫu nhiên tương ứng với số lượng đã nhập. Hiển thị mảng chưa sắp xếp và mảng đã được sắp xếp bằng thuật toán sắp xếp nổi bọt.
+
+**Chi tiết các chức năng:**
+
+1. Hiển thị màn hình yêu cầu người dùng nhập vào một số dương (hệ thập phân).
+* Khi người dùng chạy chương trình, hiển thị màn hình yêu cầu nhập một số dương.
+* Người dùng nhập vào một số dương. Sau đó, chương trình thực hiện Chức năng 2.
+
+
+2. Hiển thị & sắp xếp mảng.
+* Tạo số nguyên ngẫu nhiên trong một khoảng giá trị cho mỗi phần tử của mảng.
+* Hiển thị mảng trước và sau khi được sắp xếp.
+
+
+
+**Giao diện người dùng dự kiến:**
+*(Trống)*
+
+**Hướng dẫn**
+
+**Thuật toán**
+
+1. So sánh từng cặp phần tử kề nhau bắt đầu từ đầu mảng, và nếu chúng đang ở sai thứ tự (ngược chiều sắp xếp mong muốn), hãy hoán đổi (swap) chúng cho nhau.
+2. Nếu có ít nhất một lần hoán đổi đã diễn ra ở bước trên, hãy lặp lại bước 1.
+
+Bạn có thể tưởng tượng rằng tại mỗi bước, những "bong bóng" (phần tử) lớn hơn sẽ từ từ nổi lên bề mặt (cuối mảng) và nằm lại ở đó. Tại bước mà không còn bong bóng nào di chuyển (không có phép hoán đổi nào xảy ra), quá trình sắp xếp sẽ dừng lại. Hãy xem một ví dụ về việc sắp xếp một mảng để hiểu rõ hơn về ý tưởng của thuật toán sắp xếp nổi bọt.
+
+**Ví dụ:** Sắp xếp mảng `{5, 1, 12, -5, 16}` sử dụng thuật toán sắp xếp nổi bọt.
+
+-------------------------------------------------------
+
+Dưới đây là bản dịch tiếng Việt của yêu cầu đề bài:
+
+**Tiêu đề**
+Dãy số Fibonacci.
+
+**Bối cảnh**
+Dãy Fibonacci là một chuỗi các con số: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ... Số tiếp theo được tìm ra bằng cách cộng hai số liền trước nó lại. Ví dụ, số 2 được tạo ra bằng cách cộng hai số đứng ngay trước nó (1+1).
+
+**Đặc tả chương trình**
+Thiết kế một chương trình hiển thị 45 số trong dãy Fibonacci.
+
+**Chi tiết các chức năng:**
+
+1. Sử dụng phương pháp đệ quy (recursion method) để tìm 45 số Fibonacci và hiển thị ra màn hình.
+
+**Giao diện người dùng dự kiến:**
+*(Trống)*
+
+**Hướng dẫn**
+Các số Fibonacci là một dãy số nguyên 0, 1, 1, 2, 3, 5, 8, 13, 21, ..., trong đó mỗi phần tử được tạo thành bằng cách cộng hai phần tử đứng trước nó. Dãy này có thể được định nghĩa theo dạng đệ quy như sau:
+*(Công thức bị khuyết trong đề bài gốc, thường là $F_n = F_{n-1} + F_{n-2}$)*
+
+Các chương trình tính số Fibonacci cài đặt trực tiếp theo định nghĩa này thường được sử dụng làm ví dụ nhập môn về đệ quy. Tuy nhiên, cũng tồn tại rất nhiều thuật toán khác để tính toán (hoặc tận dụng) các số Fibonacci.
