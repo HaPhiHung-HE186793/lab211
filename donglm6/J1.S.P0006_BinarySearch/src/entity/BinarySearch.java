@@ -83,4 +83,48 @@ public class BinarySearch {
 
         return result;
     }
+
+
+    public int binarySearch1(int key){
+        int left = 0;
+        int right = array.length -1 ;
+        while(left <= right){
+            int mid = (left + right)/2;
+            if(key ==array[mid]){
+                return mid;
+            }
+            else if(key < array[mid]){
+                right = mid -1;
+            }
+            else if(key > array[mid]){
+                left = mid +1;
+            }
+        }
+        return -1;
+    }
+
+
+    public int[] findall(int number){
+        int index = binarySearch(number);
+        if(index == -1){
+            return new int[0];
+        }
+
+        int left = index;
+        while (left - 1 >= 0 && array[left -1] == number){
+            left --;
+        }
+        int right = index;
+        while(right +1 <array.length && array[right + 1] == number){
+            right ++;
+        }
+
+        int[] result = new int[right - left + 1];
+        int idx = 0;
+        for(int i = left; i <= right;i++ ){
+            result[idx++]=i;
+        }
+        return result;
+    }
 }
+

@@ -31,14 +31,14 @@ public class Main {
         array.display();
         int key = Validator.getInt("Enter search value: ",
                 "Error range!", "Invalid!", Integer.MIN_VALUE, Integer.MAX_VALUE);
-        int index = array.binarySearch(key);
-        if (index == -1) {
-            System.out.println("Can not found");
-        } else {
-            System.out.println("Found " + key + " at index: " + index);
-        }
+//        int index = array.binarySearch(key);
+//        if (index == -1) {
+//            System.out.println("Can not found");
+//        } else {
+//            System.out.println("Found " + key + " at index: " + index);
+//        }
 
-        int[] indexAll = array.binarySearchAll(key);
+        int[] indexAll = array.findall(key);
         if (indexAll.length == 0) {
             System.out.println("Can not found");
         } else {

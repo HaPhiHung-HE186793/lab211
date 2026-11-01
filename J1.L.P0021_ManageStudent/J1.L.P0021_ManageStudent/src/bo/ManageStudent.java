@@ -8,7 +8,6 @@ package bo;
 import entity.Student;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -204,25 +203,13 @@ public class ManageStudent {
         if (list.isEmpty()) {
             return null;
         }
-        // Tạo tiêu đề bảng
-        
-//neu muon hien thi ca ID
-//        String str = String.format("|%5s|%10s|%20s|%10s|%15s|\n",
-//        "No.", "ID", "Student Name", "Semester", "Course Name");
-//for (int i = 0; i < list.size(); i++) {
-//    str += String.format("|%5s|%10s|%20s|%10s|%15s|\n",
-//            i + 1,
-//            list.get(i).getId(),
-//            list.get(i).getStudentName(),
-//            list.get(i).getSemester(),
-//            list.get(i).getCourseName().getLanguage());
-//}
-        String str = String.format("|%5s|%15s|%10s|%15s|\n", "No.", "Student Name",
-                "Semester", "Course Name");
-
-        // Thêm thông tin từng sinh viên vào bảng
+        // Tạo tiêu đề bảng (hiển thị cả cột ID)
+        String str = String.format("|%-5s|%-10s|%-20s|%-10s|%-15s|\n",
+                "No.", "ID", "Student Name", "Semester", "Course Name");
         for (int i = 0; i < list.size(); i++) {
-            str += String.format("|%5s|%15s|%10s|%15s|\n", i + 1,
+            str += String.format("|%-5d|%-10s|%-20s|%-10s|%-15s|\n",
+                    i + 1,
+                    list.get(i).getId(),
                     list.get(i).getStudentName(),
                     list.get(i).getSemester(),
                     list.get(i).getCourseName().getLanguage());
@@ -236,67 +223,40 @@ public class ManageStudent {
             return "List is empty!";
         }
 
-        // Bước 1: Sắp xếp danh sách gốc theo tên trước khi làm report
-        Collections.sort(list, (s1, s2) -> s1.getStudentName().compareToIgnoreCase(s2.getStudentName()));
+        // Bước 1: Sắp xếp danh sách gốc theo: Tên chính -> Họ Đệm -> ID -> Môn học
+        Collections.sort(list);
 
-        // Bước 2: Dùng một Map để lưu trữ kết quả thống kê
-        // Key: ID + Course Name (để phân biệt cùng 1 người học nhiều môn khác nhau)
-        // Value: Một đối tượng hoặc chuỗi chứa thông tin tổng hợp
-        HashMap<String, Integer> countMap = new HashMap<>();
-        HashMap<String, String> semesterMap = new HashMap<>();
-
-        for (Student s : list) {
-            String key = s.getId() + "|" + s.getCourseName().getLanguage();
-
-            // Đếm số lần học
-            countMap.put(key, countMap.getOrDefault(key, 0) + 1);
-
-            // Cộng dồn các kỳ học (ví dụ: "Spring, Summer")
-            String sem = s.getSemester();
-            if (semesterMap.containsKey(key)) {
-                if (!semesterMap.get(key).contains(sem)) {
-                    semesterMap.put(key, semesterMap.get(key) + ", " + sem);
-                }
-            } else {
-                semesterMap.put(key, sem);
-            }
-        }
-
-        // Bước 3: Build chuỗi hiển thị
+        // Bước 2: Build chuỗi hiển thị (có cột ID) và gộp trực tiếp các dòng trùng ID + trùng Môn nằm sát nhau
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("|%-5s|%-20s|%-15s|%-10s|%-20s|\n",
-                "No.", "Student Name", "Course", "Total", "Semesters"));
-        sb.append("--------------------------------------------------------------------------\n");
-        
-        //neu muon them ID
-//        sb.append(String.format("|%-5s|%-10s|%-20s|%-15s|%-10s|%-20s|\n",
-//        "No.", "ID", "Student Name", "Course", "Total", "Semesters"));
-//sb.append("--------------------------------------------------------------------------------------\n");
+        sb.append(String.format("|%-5s|%-10s|%-20s|%-15s|%-10s|%-20s|\n",
+                "No.", "ID", "Student Name", "Course", "Total", "Semesters"));
+        sb.append("--------------------------------------------------------------------------------------\n");
 
         int count = 1;
-        // Để in đúng thứ tự đã sắp xếp, ta nên duyệt qua list đã sort thay vì duyệt qua Map
-        // Nhưng để tránh trùng lặp dòng khi in, ta dùng một Set để đánh dấu
-        List<String> printedKeys = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Student current = list.get(i);
+            int total = 1;
+            String semesters = current.getSemester();
 
-        for (Student s : list) {
-            String key = s.getId() + "|" + s.getCourseName().getLanguage();
-            if (!printedKeys.contains(key)) {
-                sb.append(String.format("|%-5d|%-20s|%-15s|%-10d|%-20s|\n",
-                        count++,
-                        s.getStudentName(),
-                        s.getCourseName().getLanguage(),
-                        countMap.get(key),
-                        semesterMap.get(key)));
-//neu muon them id
-//sb.append(String.format("|%-5d|%-10s|%-20s|%-15s|%-10d|%-20s|\n",
-//        count++,
-//        s.getId(),
-//        s.getStudentName(),
-//        s.getCourseName().getLanguage(),
-//        countMap.get(key),
-//        semesterMap.get(key)));
-                printedKeys.add(key);
+            // Đếm và gộp luôn các dòng trùng ID + trùng Môn nằm ngay bên dưới
+            while (i + 1 < list.size()
+                    && list.get(i + 1).getId().equalsIgnoreCase(current.getId())
+                    && list.get(i + 1).getCourseName() == current.getCourseName()) {
+                total++;
+                String nextSem = list.get(i + 1).getSemester();
+                if (!semesters.contains(nextSem)) {
+                    semesters += ", " + nextSem;
+                }
+                i++; // Nhảy qua dòng đã gộp
             }
+
+            sb.append(String.format("|%-5d|%-10s|%-20s|%-15s|%-10d|%-20s|\n",
+                    count++,
+                    current.getId(),
+                    current.getStudentName(),
+                    current.getCourseName().getLanguage(),
+                    total,
+                    semesters));
         }
         return sb.toString();
     }

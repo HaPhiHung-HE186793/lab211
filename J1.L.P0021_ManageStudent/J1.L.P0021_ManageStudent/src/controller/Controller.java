@@ -164,13 +164,13 @@ public class Controller {
     }
 
     /**
-     * Tạo dữ liệu mẫu để kiểm thử chương trình.
+     * Tạo dữ liệu mẫu để kiểm thử chương trình (bao gồm dữ liệu xen kẽ cùng tên khác ID).
      *
      * @throws Exception nếu dữ liệu bị trùng
      */
     public void generateStudent() throws Exception {
         studentManager.add(new Student("s1", "Nguyen Quan", "Fall2023", Course.JAVA));
-        studentManager.add(new Student("s1", "Nguyen Quan", "Fall2024", Course.JAVA));
+        studentManager.add(new Student("s9", "Nguyen Quan", "Fall2023", Course.JAVA)); // Cùng tên Nguyen Quan nhưng ID là s9 xen giữa!
         studentManager.add(new Student("s1", "Nguyen Quan", "Fall2023", Course.C_CPP));
         studentManager.add(new Student("s1", "Nguyen Quan", "Fall2023", Course.DOT_NET));
         studentManager.add(new Student("s8", "Vu Quan", "Fall2023", Course.DOT_NET));
@@ -179,8 +179,10 @@ public class Controller {
         studentManager.add(new Student("s3", "Le Thu Thao", "Sum2024", Course.JAVA));
         studentManager.add(new Student("s4", "Le Phuong Minh", "Sum2024", Course.DOT_NET));
         studentManager.add(new Student("s5", "Minh Vu", "Spring2023", Course.JAVA));
+        studentManager.add(new Student("s1", "Nguyen Quan", "Fall2024", Course.JAVA)); // s1 học lại JAVA nằm tít bên dưới!
         studentManager.add(new Student("s6", "Tuan Minh", "Spring2023", Course.C_CPP));
         studentManager.add(new Student("s7", "Quang Vu", "Fall2023", Course.DOT_NET));
+        studentManager.add(new Student("s9", "Nguyen Quan", "Spring2024", Course.JAVA)); // s9 học lại JAVA nằm ở cuối!
         studentManager.add(new Student("s8", "Vu Quan", "Fall2024", Course.DOT_NET));
     }
 

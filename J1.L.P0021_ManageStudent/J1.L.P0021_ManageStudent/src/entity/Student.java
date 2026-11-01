@@ -61,14 +61,46 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * So sánh hai sinh viên theo tên để phục vụ sắp xếp.
+     * Lấy từ cuối cùng (Tên chính) trong chuỗi Họ và Tên.
+     *
+     * @param fullName chuỗi họ tên đầy đủ
+     * @return tên chính (từ cuối cùng)
+     */
+    private String getFirstName(String fullName) {
+        String[] words = fullName.trim().split("\\s+");
+        return words[words.length - 1];
+    }
+
+    /**
+     * So sánh hai sinh viên theo thứ tự ưu tiên:
+     * 1. Tên chính (từ cuối cùng).
+     * 2. Cả chuỗi Họ + Đệm + Tên.
+     * 3. Mã sinh viên (ID) để gom cùng 1 sinh viên lại với nhau.
+     * 4. Môn học (CourseName) để gom các môn học giống nhau của cùng 1 sinh viên đứng sát nhau.
      *
      * @param t sinh viên cần so sánh
-     * @return giá trị so sánh theo tên
+     * @return giá trị so sánh
      */
     @Override
     public int compareTo(Student t) {
-        return this.studentName.compareTo(t.studentName);
+        // 1. So sánh Tên chính (từ cuối cùng)
+        int firstNameCompare = getFirstName(this.studentName)
+                .compareToIgnoreCase(getFirstName(t.studentName));
+        if (firstNameCompare != 0) {
+            return firstNameCompare;
+        }
+        // 2. Nếu trùng Tên chính -> So sánh cả Họ + Đệm + Tên
+        int fullNameCompare = this.studentName.compareToIgnoreCase(t.studentName);
+        if (fullNameCompare != 0) {
+            return fullNameCompare;
+        }
+        // 3. Nếu trùng cả Họ Tên -> Gom nhóm theo ID (S1 đi liền với S1)
+        int idCompare = this.id.compareToIgnoreCase(t.id);
+        if (idCompare != 0) {
+            return idCompare;
+        }
+        // 4. Nếu cùng ID -> Gom các môn giống nhau của ID đó đứng sát nhau
+        return this.courseName.compareTo(t.courseName);
     }
 
     /**
